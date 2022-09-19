@@ -1,2 +1,5 @@
 # CCC-PONG
-Pong Game for Calgary Coding Chads
+
+Group Name: Calgary Coding Chads
+
+Avatar:
