@@ -1,11 +1,12 @@
 import pygame
 import random
 import sys
+import colours_module as colours
 import score
 
 # GLOBAL VARIABLES
 
-pygame.mixer.pre_init(44100, -16, 2, 512)
+# pygame.mixer.pre_init(44100, -16, 2, 512)
 pygame.init()
 clock = pygame.time.Clock()
 
@@ -20,9 +21,6 @@ player = pygame.Rect(screen_width-20, screen_height /
                      2-70, 10, 140)  # -70 missing
 opponent = pygame.Rect(10, screen_height/2-70, 10, 140)  # -70 missing
 
-# Colors
-light_grey = (200, 200, 200)
-bg_color = pygame.Color('grey12')
 
 # Game Variables
 ball_speed_x = 7
@@ -36,8 +34,8 @@ opponent_score = 0
 basic_font = pygame.font.Font('freesansbold.ttf', 32)
 
 # Sound Variables
-# pong_sound = pygame.mixer.Sound("./media/pong.ogg")
-# score_sound = pygame.mixer.Sound("./media/score.ogg")
+# pong_sound = pygame.mixer.Sound("./media/media-pong.ogg")
+# score_sound = pygame.mixer.Sound("./media/media-score.ogg")
 
 
 # FUNCTIONS
@@ -49,14 +47,19 @@ def ball_animation():
     ball.x += ball_speed_x
     ball.y += ball_speed_y
 
-    # Ball Collision
     if ball.top <= 0 or ball.bottom >= screen_height:
         ball_speed_y *= -1
 
-    # Ball Collision Left
+     # Ball Collision Left
     if ball.left <= 0:
         # pygame.mixer.Sound.play(score_sound)
         player_score += 1
+        ball_restart()
+
+     # Ball Collision Right
+    if ball.right >= screen_width:
+        # pygame.mixer.Sound.play(score_sound)
+        opponent_score += 1
         ball_restart()
 
     # Ball Collision Right
@@ -65,7 +68,7 @@ def ball_animation():
         opponent_score += 1
         ball_restart()
 
-    # Ball Collision (Player)
+     # Ball Collision (Player)
     if ball.colliderect(player) or ball.colliderect(opponent):
         # pygame.mixer.Sound.play(pong_sound)
         ball_speed_x *= -1
@@ -137,16 +140,16 @@ if __name__ == "__main__":
         player_animation()
         opponent_ai()
 
-        screen.fill(bg_color)
-        pygame.draw.rect(screen, light_grey, player)
-        pygame.draw.rect(screen, light_grey, opponent)
-        pygame.draw.ellipse(screen, light_grey, ball)
-        pygame.draw.aaline(screen, light_grey, (screen_width/2,
-                                                0), (screen_width/2, screen_height))
+        screen.fill(colours.bg_color)
+        pygame.draw.rect(screen, colours.light_grey, player)
+        pygame.draw.rect(screen, colours.light_grey, opponent)
+        pygame.draw.ellipse(screen, colours.light_grey, ball)
+        pygame.draw.aaline(screen, colours.light_grey, (screen_width/2,
+                                                        0), (screen_width/2, screen_height))
 
         # Create a surface for the scores
-        score.score(basic_font, player_score,
-                    opponent_score, light_grey, screen)
+        score.score(basic_font, player_score, opponent_score,
+                    colours.light_grey, screen)
 
         pygame.display.flip()
         clock.tick(60)
