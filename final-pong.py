@@ -3,6 +3,7 @@ import random
 import sys
 import colours_module as colours
 import variables as v
+import score
 
 # GLOBAL VARIABLES
 
@@ -143,13 +144,8 @@ if __name__ == "__main__":
                                                         0), (screen_width/2, screen_height))
 
         # Create a surface for the scores
-        player_text = basic_font.render(
-            f"{player_score}", False, colours.light_grey)
-        screen.blit(player_text, (660, 470))
-
-        opponent_text = basic_font.render(
-            f"{opponent_score}", False, colours.light_grey)
-        screen.blit(opponent_text, (600, 470))
+        score.score(basic_font, player_score,
+                    opponent_score, screen)
 
         pygame.display.flip()
         clock.tick(60)
