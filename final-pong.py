@@ -2,11 +2,11 @@ import pygame
 import random
 import sys
 import colours_module as colours
-import score
+import variables as v
 
 # GLOBAL VARIABLES
 
-# pygame.mixer.pre_init(44100, -16, 2, 512)
+#pygame.mixer.pre_init(44100, -16, 2, 512)
 pygame.init()
 clock = pygame.time.Clock()
 
@@ -23,10 +23,10 @@ opponent = pygame.Rect(10, screen_height/2-70, 10, 140)  # -70 missing
 
 
 # Game Variables
-ball_speed_x = 7
-ball_speed_y = 7
-player_speed = 0
-opponent_speed = 3
+# ball_speed_x = 7
+# ball_speed_y = 7
+# player_speed = 0
+# opponent_speed = 3
 
 # Score Text
 player_score = 0
@@ -34,8 +34,8 @@ opponent_score = 0
 basic_font = pygame.font.Font('freesansbold.ttf', 32)
 
 # Sound Variables
-# pong_sound = pygame.mixer.Sound("./media/media-pong.ogg")
-# score_sound = pygame.mixer.Sound("./media/media-score.ogg")
+#pong_sound = pygame.mixer.Sound("./media/media-pong.ogg")
+#score_sound = pygame.mixer.Sound("./media/media-score.ogg")
 
 
 # FUNCTIONS
@@ -44,22 +44,17 @@ def ball_animation():
 
     global ball_speed_x, ball_speed_y, player_score, opponent_score
 
-    ball.x += ball_speed_x
-    ball.y += ball_speed_y
+    ball.x += v.ball_speed_x
+    ball.y += v.ball_speed_y
 
+    # Ball Collision
     if ball.top <= 0 or ball.bottom >= screen_height:
-        ball_speed_y *= -1
+        v.ball_speed_y *= -1
 
-     # Ball Collision Left
+    # Ball Collision Left
     if ball.left <= 0:
         # pygame.mixer.Sound.play(score_sound)
         player_score += 1
-        ball_restart()
-
-     # Ball Collision Right
-    if ball.right >= screen_width:
-        # pygame.mixer.Sound.play(score_sound)
-        opponent_score += 1
         ball_restart()
 
     # Ball Collision Right
@@ -68,17 +63,17 @@ def ball_animation():
         opponent_score += 1
         ball_restart()
 
-     # Ball Collision (Player)
+    # Ball Collision (Player)
     if ball.colliderect(player) or ball.colliderect(opponent):
         # pygame.mixer.Sound.play(pong_sound)
-        ball_speed_x *= -1
+        v.ball_speed_x *= -1
 
 
 def player_animation():
 
     global player_speed
 
-    player.y += player_speed
+    player.y += v.player_speed
 
     # Player Collision
     if player.top <= 0:
@@ -93,10 +88,10 @@ def opponent_ai():
     global opponent_speed
 
     if opponent.top < ball.top:  # opponent is above ball
-        opponent.y += opponent_speed
+        opponent.y += v.opponent_speed
 
     if opponent.bottom > ball.bottom:  # opponent is below ball
-        opponent.y -= opponent_speed
+        opponent.y -= v.opponent_speed
 
     if opponent.top <= 0:
         opponent.top = 0
@@ -111,8 +106,8 @@ def ball_restart():
 
     ball.center = (screen_width/2, screen_height/2)
 
-    ball_speed_y *= random.choice((1, -1))
-    ball_speed_x *= random.choice((1, -1))
+    v.ball_speed_y *= random.choice((1, -1))
+    v.ball_speed_x *= random.choice((1, -1))
 
 
 if __name__ == "__main__":
@@ -127,14 +122,14 @@ if __name__ == "__main__":
 
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_UP:
-                    player_speed -= 6
+                    v.player_speed -= 6
                 if event.key == pygame.K_DOWN:
-                    player_speed += 6
+                    v.player_speed += 6
             if event.type == pygame.KEYUP:
                 if event.key == pygame.K_UP:
-                    player_speed += 6
+                    v.player_speed += 6
                 if event.key == pygame.K_DOWN:
-                    player_speed -= 6
+                    v.player_speed -= 6
 
         ball_animation()
         player_animation()
@@ -148,8 +143,13 @@ if __name__ == "__main__":
                                                         0), (screen_width/2, screen_height))
 
         # Create a surface for the scores
-        score.score(basic_font, player_score, opponent_score,
-                    colours.light_grey, screen)
+        player_text = basic_font.render(
+            f"{player_score}", False, colours.light_grey)
+        screen.blit(player_text, (660, 470))
+
+        opponent_text = basic_font.render(
+            f"{opponent_score}", False, colours.light_grey)
+        screen.blit(opponent_text, (600, 470))
 
         pygame.display.flip()
         clock.tick(60)
