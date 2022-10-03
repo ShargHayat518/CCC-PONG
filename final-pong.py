@@ -1,10 +1,11 @@
 import pygame
 import random
 import sys
+import colours_module as colours
 
 # GLOBAL VARIABLES
 
-pygame.mixer.pre_init(44100, -16, 2, 512)
+#pygame.mixer.pre_init(44100, -16, 2, 512)
 pygame.init()
 clock = pygame.time.Clock()
 
@@ -19,9 +20,6 @@ player = pygame.Rect(screen_width-20, screen_height/ \
                      2-70, 10, 140)  # -70 missing
 opponent = pygame.Rect(10, screen_height/2-70, 10, 140)  # -70 missing
 
-# Colors
-light_grey = (200, 200, 200)
-bg_color = pygame.Color('grey12')
 
 # Game Variables
 ball_speed_x = 7
@@ -35,8 +33,8 @@ opponent_score = 0
 basic_font = pygame.font.Font('freesansbold.ttf', 32)
 
 # Sound Variables
-pong_sound = pygame.mixer.Sound("./media/media-pong.ogg")
-score_sound = pygame.mixer.Sound("./media/media-score.ogg")
+#pong_sound = pygame.mixer.Sound("./media/media-pong.ogg")
+#score_sound = pygame.mixer.Sound("./media/media-score.ogg")
 
 
 
@@ -55,20 +53,20 @@ def ball_animation():
 
   # Ball Collision Left
   if ball.left <= 0:
-    pygame.mixer.Sound.play(score_sound)
+    #pygame.mixer.Sound.play(score_sound)
     player_score += 1
     ball_restart()
 
   # Ball Collision Right
   if ball.right >= screen_width:
-    pygame.mixer.Sound.play(score_sound)
+    #pygame.mixer.Sound.play(score_sound)
     opponent_score += 1
     ball_restart()
 
 
   # Ball Collision (Player)
   if ball.colliderect(player) or ball.colliderect(opponent):
-    pygame.mixer.Sound.play(pong_sound)
+    #pygame.mixer.Sound.play(pong_sound)
     ball_speed_x *= -1
 
 
@@ -140,19 +138,19 @@ if __name__ == "__main__":
       player_animation()
       opponent_ai()
 
-      screen.fill(bg_color)
-      pygame.draw.rect(screen, light_grey, player)
-      pygame.draw.rect(screen, light_grey, opponent)
-      pygame.draw.ellipse(screen, light_grey, ball)
-      pygame.draw.aaline(screen, light_grey, (screen_width/2,
+      screen.fill(colours.bg_color)
+      pygame.draw.rect(screen, colours.light_grey, player)
+      pygame.draw.rect(screen, colours.light_grey, opponent)
+      pygame.draw.ellipse(screen, colours.light_grey, ball)
+      pygame.draw.aaline(screen, colours.light_grey, (screen_width/2,
                                               0), (screen_width/2, screen_height))
 
 
       # Create a surface for the scores
-      player_text = basic_font.render(f"{player_score}", False, light_grey)
+      player_text = basic_font.render(f"{player_score}", False, colours.light_grey)
       screen.blit(player_text, (660,470))
 
-      opponent_text = basic_font.render(f"{opponent_score}", False, light_grey)
+      opponent_text = basic_font.render(f"{opponent_score}", False, colours.light_grey)
       screen.blit(opponent_text, (600,470))
 
 
