@@ -4,6 +4,7 @@ import sys
 import colours_module as colours
 import variables as v
 import score
+import pongsounds
 
 # GLOBAL VARIABLES
 
@@ -55,18 +56,21 @@ def ball_animation():
     # Ball Collision Left
     if ball.left <= 0:
         # pygame.mixer.Sound.play(score_sound)
+        pongsounds.playScoreSound()
         player_score += 1
         ball_restart()
 
     # Ball Collision Right
     if ball.right >= screen_width:
         # pygame.mixer.Sound.play(score_sound)
+        pongsounds.playScoreSound()
         opponent_score += 1
         ball_restart()
 
     # Ball Collision (Player)
     if ball.colliderect(player) or ball.colliderect(opponent):
         # pygame.mixer.Sound.play(pong_sound)
+        pongsounds.playPongSound()
         v.ball_speed_x *= -1
 
 
