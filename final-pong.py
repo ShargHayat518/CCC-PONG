@@ -18,6 +18,7 @@ screen = pygame.display.set_mode((screen_width, screen_height))
 pygame.display.set_caption('Pong')
 
 # Game Rectangle
+buffBall = pygame.Rect(screen_width/2-10, screen_height/2-10, 20, 20)
 ball = pygame.Rect(screen_width/2-15, screen_height/2-15, 30, 30)
 player = pygame.Rect(screen_width-20, screen_height /
                      2-70, 10, 140)  # -70 missing
@@ -35,9 +36,8 @@ player_score = 0
 opponent_score = 0
 basic_font = pygame.font.Font('freesansbold.ttf', 32)
 
-# Sound Variables
-#pong_sound = pygame.mixer.Sound("./media/media-pong.ogg")
-#score_sound = pygame.mixer.Sound("./media/media-score.ogg")
+#Randomize buff ball direction when spawned
+v.buffBall_speed_y *= random.choice((-1,1))
 
 
 # FUNCTIONS
@@ -73,6 +73,9 @@ def ball_animation():
         pongsounds.playPongSound()
         v.ball_speed_x *= -1
 
+    if ball.colliderect(buffBall):
+        pongsounds.playBuffSound()
+        v.ball_speed_x *= -1
 
 def player_animation():
 
@@ -103,6 +106,13 @@ def opponent_ai():
 
     if opponent.bottom >= screen_height:
         opponent.bottom = screen_height
+
+
+def spawnBuff():
+    buffBall.y += v.buffBall_speed_y
+
+    if buffBall.top <= 0 or buffBall.bottom >= screen_height:
+        v.buffBall_speed_y *= -1
 
 
 def ball_restart():
@@ -139,6 +149,7 @@ if __name__ == "__main__":
         ball_animation()
         player_animation()
         opponent_ai()
+        spawnBuff()
 
         screen.fill(colours.bg_color)
         pygame.draw.rect(screen, colours.light_grey, player)
@@ -146,6 +157,8 @@ if __name__ == "__main__":
         pygame.draw.ellipse(screen, colours.light_grey, ball)
         pygame.draw.aaline(screen, colours.light_grey, (screen_width/2,
                                                         0), (screen_width/2, screen_height))
+        pygame.draw.ellipse(screen, 'YELLOW', buffBall)
+
 
         # Create a surface for the scores
         score.score(basic_font, player_score,
