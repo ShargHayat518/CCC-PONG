@@ -19,7 +19,7 @@ pygame.display.set_caption('Pong')
 
 # Game Rectangle
 
-buffBall = pygame.Rect(screen_width/2-1, random.randint(0+120,screen_height-120), 2, 120)
+buffWall = pygame.Rect(screen_width/2-1, random.randint(0+120,screen_height-120), 2, 120)
 ball = pygame.Rect(screen_width/2-15, random.randint(0+30,screen_height-30), 30, 30)
 player = pygame.Rect(screen_width-30, screen_height /
                      2-70, 20, 140)  # -70 missing
@@ -38,7 +38,7 @@ opponent_score = 0
 basic_font = pygame.font.Font('freesansbold.ttf', 32)
 
 #Randomize buff ball direction when spawned
-v.buffBall_speed_y *= random.choice((-1,1))
+v.buffWall_speed_y *= random.choice((-1,1))
 
 
 # FUNCTIONS
@@ -93,7 +93,7 @@ def ball_animation():
         v.playerHasBall = False
         
 
-    if ball.colliderect(buffBall):
+    if ball.colliderect(buffWall):
         v.buffAcquired = True
 
 
@@ -129,10 +129,10 @@ def opponent_ai():
 
 
 def spawnBuff():
-    buffBall.y += v.buffBall_speed_y
+    buffWall.y += v.buffWall_speed_y
 
-    if buffBall.top <= 0 or buffBall.bottom >= screen_height:
-        v.buffBall_speed_y *= -1
+    if buffWall.top <= 0 or buffWall.bottom >= screen_height:
+        v.buffWall_speed_y *= -1
 
 
 def ball_restart():
@@ -193,13 +193,13 @@ if __name__ == "__main__":
         pygame.draw.aaline(screen, colours.light_grey, (screen_width/2,
                                                         0), (screen_width/2, screen_height))
        
-        #This was a test to show in color of the buffball to see if it was completely hit by player or opponent
+        #This was a test to show in color of the buffWall to see if it was completely hit by player or opponent
         if v.playerHasBall == True and v.buffAcquired == True:
-            pygame.draw.rect(screen, 'GREEN', buffBall)
+            pygame.draw.rect(screen, 'GREEN', buffWall)
         elif v.playerHasBall == False and v.buffAcquired == True:
-            pygame.draw.rect(screen, 'RED', buffBall)
+            pygame.draw.rect(screen, 'RED', buffWall)
         else:
-            pygame.draw.rect(screen, 'YELLOW', buffBall)
+            pygame.draw.rect(screen, 'YELLOW', buffWall)
 
         # Create a surface for the scores
         score.score(basic_font, player_score,
