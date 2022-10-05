@@ -18,10 +18,12 @@ screen = pygame.display.set_mode((screen_width, screen_height))
 pygame.display.set_caption('Pong')
 
 # Game Rectangle
-ball = pygame.Rect(screen_width/2-15, screen_height/2-15, 30, 30)
-player = pygame.Rect(screen_width-20, screen_height /
-                     2-70, 10, 140)  # -70 missing
-opponent = pygame.Rect(10, screen_height/2-70, 10, 140)  # -70 missing
+
+buffWall = pygame.Rect(screen_width/2-1, random.randint(0+120,screen_height-120), 2, 120)
+ball = pygame.Rect(screen_width/2-15, random.randint(0+30,screen_height-30), 30, 30)
+player = pygame.Rect(screen_width-30, screen_height /
+                     2-70, 20, 140)  # -70 missing
+opponent = pygame.Rect(10, screen_height/2-70, 20, 140)  # -70 missing
 
 
 # Game Variables
@@ -35,9 +37,8 @@ player_score = 0
 opponent_score = 0
 basic_font = pygame.font.Font('freesansbold.ttf', 32)
 
-# Sound Variables
-#pong_sound = pygame.mixer.Sound("./media/media-pong.ogg")
-#score_sound = pygame.mixer.Sound("./media/media-score.ogg")
+#Randomize buff ball direction when spawned
+v.buffWall_speed_y *= random.choice((-1,1))
 
 
 # FUNCTIONS
@@ -55,23 +56,45 @@ def ball_animation():
 
     # Ball Collision Left
     if ball.left <= 0:
-        # pygame.mixer.Sound.play(score_sound)
         pongsounds.playScoreSound()
         player_score += 1
         ball_restart()
 
     # Ball Collision Right
     if ball.right >= screen_width:
-        # pygame.mixer.Sound.play(score_sound)
         pongsounds.playScoreSound()
         opponent_score += 1
         ball_restart()
 
     # Ball Collision (Player)
-    if ball.colliderect(player) or ball.colliderect(opponent):
-        # pygame.mixer.Sound.play(pong_sound)
+    if ball.colliderect(player):
         pongsounds.playPongSound()
         v.ball_speed_x *= -1
+        
+
+        if v.playerHasBall == False and v.buffAcquired == True:
+            v.playerHit = True
+
+        
+        v.buffAcquired = False
+        v.playerHasBall = True
+        
+
+    if ball.colliderect(opponent):
+        pongsounds.playPongSound()
+        v.ball_speed_x *= -1
+        
+
+        if v.playerHasBall == True and v.buffAcquired == True:
+            v.playerHit = False
+            
+        
+        v.buffAcquired = False
+        v.playerHasBall = False
+        
+
+    if ball.colliderect(buffWall):
+        v.buffAcquired = True
 
 
 def player_animation():
@@ -105,9 +128,20 @@ def opponent_ai():
         opponent.bottom = screen_height
 
 
+def spawnBuff():
+    buffWall.y += v.buffWall_speed_y
+
+    if buffWall.top <= 0 or buffWall.bottom >= screen_height:
+        v.buffWall_speed_y *= -1
+
+
 def ball_restart():
 
     global ball_speed_x, ball_speed_y
+
+    v.playerHasBall = None
+    v.buffAcquired = None
+    v.playerHit = None    
 
     ball.center = (screen_width/2, screen_height/2)
 
@@ -139,13 +173,33 @@ if __name__ == "__main__":
         ball_animation()
         player_animation()
         opponent_ai()
+        spawnBuff()
 
         screen.fill(colours.bg_color)
-        pygame.draw.rect(screen, colours.light_grey, player)
-        pygame.draw.rect(screen, colours.light_grey, opponent)
+
+        #This triggers the color splash once the conditions of hitting the buff and if the ball was from player or opponent
+        
+        if v.playerHit == True:
+            pygame.draw.rect(screen, (random.randint(0,255),random.randint(0,255),random.randint(0,255)),player, border_radius=15)
+        else:
+            pygame.draw.rect(screen, colours.light_grey, player, border_radius=15)
+ 
+        if v.playerHit == False:
+            pygame.draw.rect(screen, (random.randint(0,255),random.randint(0,255),random.randint(0,255)), opponent, border_radius=15)
+        else:
+            pygame.draw.rect(screen, colours.light_grey, opponent, border_radius=15)
+
         pygame.draw.ellipse(screen, colours.light_grey, ball)
         pygame.draw.aaline(screen, colours.light_grey, (screen_width/2,
                                                         0), (screen_width/2, screen_height))
+       
+        #This was a test to show in color of the buffWall to see if it was completely hit by player or opponent
+        if v.playerHasBall == True and v.buffAcquired == True:
+            pygame.draw.rect(screen, 'GREEN', buffWall)
+        elif v.playerHasBall == False and v.buffAcquired == True:
+            pygame.draw.rect(screen, 'RED', buffWall)
+        else:
+            pygame.draw.rect(screen, 'YELLOW', buffWall)
 
         # Create a surface for the scores
         score.score(basic_font, player_score,
