@@ -6,3 +6,8 @@ player_speed = 0
 opponent_speed = 7
 buffBall_speed_y = 6
 buffBallColor = 'YELLOW'
+
+playerHasBall = None
+buffAcquired = None
+
+playerHit = None
