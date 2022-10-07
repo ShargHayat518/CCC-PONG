@@ -65,12 +65,10 @@ def ball_animation():
 
     # Ball Collision Left
     if ball.left <= 0:
-        pongsounds.playScoreSound()
         v.ball_speed_x *= -1
 
     # Ball Collision Right
     if ball.right >= screen_width:
-        pongsounds.playScoreSound()
         v.ball_speed_x *= -1
 
     # Ball Collision (Player)
@@ -98,10 +96,12 @@ def ball_animation():
         v.buffAcquired = True
 
     if ball.colliderect(player_net):
+        pongsounds.playScoreSound()
         opponent_score += 1
         ball_restart()
 
     if ball.colliderect(opponent_net):
+        pongsounds.playScoreSound()
         player_score += 1
         ball_restart()
 
