@@ -193,11 +193,10 @@ if __name__ == "__main__":
             else:
                 pygame.draw.rect(screen, colours.light_grey, opponent, border_radius=15)
 
-
         pygame.draw.ellipse(screen, colours.light_grey, ball)
         pygame.draw.aaline(screen, colours.light_grey, (screen_width/2,
                                                         0), (screen_width/2, screen_height))
-       
+        
        
         #This was a test to show color of the buffWall to see if it was completely hit by player or opponent in YELLOW buff
         if (selectedBuffColor == "YELLOW"):
