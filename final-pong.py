@@ -69,11 +69,11 @@ def ball_animation():
     ball.y += v.ball_speed_y
 
     # Ball Collision
-    if ball.top <= 0 or ball.bottom >= screen_height and v.reverse_axis == False:
+    if (ball.top <= 0 or ball.bottom >= screen_height) and v.reverse_axis == False:
         v.ball_speed_y *= -1
         print("false")
 
-    elif ball.top <= 0 or ball.bottom >= screen_height and v.reverse_axis == True:
+    elif (ball.top <= 0 or ball.bottom >= screen_height) and v.reverse_axis == True:
         v.ball_speed_y *= -1
         v.ball_speed_x *= -1
         print("True")
@@ -111,8 +111,8 @@ def ball_animation():
         v.buffAcquired = True
         if v.reverse_axis == False:
             v.reverse_axis = True
-        # elif v.reverse_axis == True:
-            #v.reverse_axis = False
+        elif v.reverse_axis == True:
+            v.reverse_axis = False
 
     if ball.colliderect(player_net):
         pongsounds.playScoreSound()
