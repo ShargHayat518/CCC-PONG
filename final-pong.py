@@ -14,7 +14,6 @@ clock = pygame.time.Clock()
 
 screen_width = 1280
 screen_height = 800
-print(v.reverse_axis)
 screen = pygame.display.set_mode((screen_width, screen_height))
 pygame.display.set_caption('Pong')
 
@@ -71,12 +70,10 @@ def ball_animation():
     # Ball Collision
     if (ball.top <= 0 or ball.bottom >= screen_height) and v.reverse_axis == False:
         v.ball_speed_y *= -1
-        print("false")
 
     elif (ball.top <= 0 or ball.bottom >= screen_height) and v.reverse_axis == True:
         v.ball_speed_y *= -1
         v.ball_speed_x *= -1
-        print("True")
 
     # Ball Collision Left
     if ball.left <= 0:
