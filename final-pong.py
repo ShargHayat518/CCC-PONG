@@ -40,36 +40,20 @@ basic_font = pygame.font.Font('freesansbold.ttf', 32)
 v.buffWall_speed_y *= random.choice((-1, 1))
 
 
-# FUNCTIONS
-
-# DUPLICATE I THINK
-# def net_animation():
-#     player_net.y += 10
-#     opponent_net.y += 10
-
-#     # if player_net.bottom >= screen_height:
-#     #     player_net.top = 0
-
-#     # if opponent_net.bottom >= screen_height:
-#     #     opponent_net.top = 0
-
-#     if player_net.top <= 0 or player_net.bottom >= screen_height:
-#         player_net.y *= -1
-
-#     if opponent_net.top <= 0 or opponent_net.bottom >= screen_height:
-#         opponent_net.y *= -1
-
-
 def ball_animation():
 
-    global ball_speed_x, ball_speed_y, player_score, opponent_score
+    global player_score, opponent_score
 
     ball.x += v.ball_speed_x
     ball.y += v.ball_speed_y
 
     # Ball Collision
-    if ball.top <= 0 or ball.bottom >= screen_height:
+    if (ball.top <= 0 or ball.bottom >= screen_height) and v.reverse_axis == False:
         v.ball_speed_y *= -1
+
+    elif (ball.top <= 0 or ball.bottom >= screen_height) and v.reverse_axis == True:
+        v.ball_speed_y *= -1
+        v.ball_speed_x *= -1
 
     # Ball Collision Left
     if ball.left <= 0:
@@ -102,6 +86,10 @@ def ball_animation():
 
     if ball.colliderect(buffWall):
         v.buffAcquired = True
+        if v.reverse_axis == False:
+            v.reverse_axis = True
+        elif v.reverse_axis == True:
+            v.reverse_axis = False
 
     if ball.colliderect(player_net):
         pongsounds.playScoreSound()
@@ -165,26 +153,25 @@ def ball_restart():
 
 
 def net_animation():
-    #Original code
-    #player_net.y +=10
-    #opponent_net.y += 10
-    
-    player_net.y += v.player_net_speed_y
-    opponent_net.y += v.opponent_net_speed_y
+    # Original code
+    player_net.y +=10
+    opponent_net.y += 10
 
-    #Original Code
-    # if player_net.bottom >= screen_height:
-    #     player_net.top = 0
+    # player_net.y += v.player_net_speed_y
+    # opponent_net.y += v.opponent_net_speed_y
 
-    # if opponent_net.bottom >= screen_height:
-    #     opponent_net.top = 0
+    # Original Code
+    if player_net.bottom >= screen_height:
+        player_net.top = 0
 
-    if player_net.top <= 0 or player_net.bottom >= screen_height:
-        v.player_net_speed_y *= -1
+    if opponent_net.bottom >= screen_height:
+        opponent_net.top = 0
 
-    if opponent_net.top <= 0 or opponent_net.bottom >= screen_height:
-        v.opponent_net_speed_y *= -1
+    # if player_net.top <= 0 or player_net.bottom >= screen_height:
+    #     v.player_net_speed_y *= -1
 
+    # if opponent_net.top <= 0 or opponent_net.bottom >= screen_height:
+    #     v.opponent_net_speed_y *= -1
 
 
 if __name__ == "__main__":
@@ -216,19 +203,22 @@ if __name__ == "__main__":
 
         screen.fill(colours.bg_color)
 
-        #This triggers the color splash once the conditions of hitting the buff and if the ball was from player or opponent if the buff is YELLOW
+        # This triggers the color splash once the conditions of hitting the buff and if the ball was from player or opponent if the buff is YELLOW
         if v.playerHit == True:
-            pygame.draw.rect(screen, (random.randint(0,255),random.randint(0,255),random.randint(0,255)),player)
+            pygame.draw.rect(screen, (random.randint(0, 255), random.randint(
+                0, 255), random.randint(0, 255)), player)
+
         else:
             pygame.draw.rect(screen, colours.light_grey, player)
 
         if v.playerHit == False:
-            pygame.draw.rect(screen, (random.randint(0,255),random.randint(0,255),random.randint(0,255)), opponent)
+            pygame.draw.rect(screen, (random.randint(0, 255), random.randint(
+                0, 255), random.randint(0, 255)), opponent)
+
         else:
             pygame.draw.rect(screen, colours.light_grey, opponent)
 
-
-        #This was a test to show color of the buffWall to see if it was completely hit by player or opponent in YELLOW buff
+        # This was a test to show color of the buffWall to see if it was completely hit by player or opponent in YELLOW buff
         if v.playerHasBall == True and v.buffAcquired == True:
             pygame.draw.rect(screen, 'GREEN', buffWall)
         elif v.playerHasBall == False and v.buffAcquired == True:
@@ -236,16 +226,12 @@ if __name__ == "__main__":
         else:
             pygame.draw.rect(screen, "YELLOW", buffWall)
 
-
         pygame.draw.ellipse(screen, colours.light_grey, ball)
         pygame.draw.aaline(screen, colours.light_grey, (screen_width/2,
                                                         0), (screen_width/2, screen_height))
 
-        pygame.draw.rect(screen, "RED",player_net)
-        pygame.draw.rect(screen, "RED",opponent_net)
-       
-        
-
+        pygame.draw.rect(screen, "RED", player_net)
+        pygame.draw.rect(screen, "RED", opponent_net)
 
         # Create a surface for the scores
         score.score(basic_font, player_score,
