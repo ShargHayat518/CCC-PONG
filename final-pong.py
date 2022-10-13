@@ -30,10 +30,10 @@ opponent = pygame.Rect(50, screen_height/2-70, 20, 140)
 opponent_net = pygame.Rect(0, screen_height/2-70, 20, 250)
 player_net = pygame.Rect(screen_width-20, screen_height /
                          2-70, 20, 250)
-obstacle1 = pygame.Rect(300, 50, 100, 100)
-obstacle2 = pygame.Rect(500, 250, 100, 100)
-obstacle3 = pygame.Rect(700, 450, 100, 100)
-obstacle4 = pygame.Rect(900, 650, 100, 100)
+obstacle1 = pygame.Rect(325, 75, 50, 50)
+obstacle2 = pygame.Rect(525, 275, 50, 50)
+obstacle3 = pygame.Rect(725, 475, 50, 50)
+obstacle4 = pygame.Rect(925, 675, 50, 50)
 
 # Score Text
 player_score = 0
@@ -215,6 +215,24 @@ def net_animation():
     #     v.opponent_net_speed_y *= -1
 
 
+def obstacle_animation():
+    speed = 10
+
+    obstacle1.y += speed
+    obstacle2.y += speed
+    obstacle3.y -= speed
+    obstacle4.y -= speed
+
+    if obstacle1.bottom >= screen_height:
+        obstacle1.top = 0
+    if obstacle2.bottom >= screen_height:
+        obstacle2.top = 0
+    if obstacle3.top <= 0:
+        obstacle3.bottom = screen_height
+    if obstacle4.top <= 0:
+        obstacle4.bottom = screen_height
+
+
 if __name__ == "__main__":
 
     # GAME LOOP
@@ -241,6 +259,7 @@ if __name__ == "__main__":
         opponent_ai()
         spawnBuff()
         net_animation()
+        obstacle_animation()
 
         screen.fill(colours.bg_color)
 
