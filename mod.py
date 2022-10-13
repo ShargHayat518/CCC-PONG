@@ -26,7 +26,6 @@ def ball_animation():
             ball_speed_y *= -1
         elif abs(ball.top - obstacle1.bottom) < 10 and ball_speed_y < 0:
             ball_speed_y *= -1
-
     if ball.colliderect(obstacle2):
         if abs(ball.right - obstacle2.left) < 10:
             ball_speed_x *= -1
