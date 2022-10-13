@@ -40,26 +40,6 @@ basic_font = pygame.font.Font('freesansbold.ttf', 32)
 v.buffWall_speed_y *= random.choice((-1, 1))
 
 
-# FUNCTIONS
-
-# DUPLICATE I THINK
-# def net_animation():
-#     player_net.y += 10
-#     opponent_net.y += 10
-
-#     # if player_net.bottom >= screen_height:
-#     #     player_net.top = 0
-
-#     # if opponent_net.bottom >= screen_height:
-#     #     opponent_net.top = 0
-
-#     if player_net.top <= 0 or player_net.bottom >= screen_height:
-#         player_net.y *= -1
-
-#     if opponent_net.top <= 0 or opponent_net.bottom >= screen_height:
-#         opponent_net.y *= -1
-
-
 def ball_animation():
 
     global player_score, opponent_score
@@ -174,15 +154,15 @@ def ball_restart():
 
 def net_animation():
     # Original code
-    #player_net.y +=10
-    #opponent_net.y += 10
+    player_net.y +=10
+    opponent_net.y += 10
 
-    player_net.y += v.player_net_speed_y
-    opponent_net.y += v.opponent_net_speed_y
+    # player_net.y += v.player_net_speed_y
+    # opponent_net.y += v.opponent_net_speed_y
 
     # Original Code
-    # if player_net.bottom >= screen_height:
-    #     player_net.top = 0
+    if player_net.bottom >= screen_height:
+        player_net.top = 0
 
     if opponent_net.bottom >= screen_height:
         opponent_net.top = 0

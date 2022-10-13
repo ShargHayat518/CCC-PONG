@@ -13,5 +13,5 @@ buffAcquired = None
 playerHit = None
 
 # Testing stuff
-player_net_speed_y = 10
-opponent_net_speed_y = 10
+# player_net_speed_y = 10
+# opponent_net_speed_y = 10
