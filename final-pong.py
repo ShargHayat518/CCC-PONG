@@ -30,6 +30,10 @@ opponent = pygame.Rect(50, screen_height/2-70, 20, 140)
 opponent_net = pygame.Rect(0, screen_height/2-70, 20, 250)
 player_net = pygame.Rect(screen_width-20, screen_height /
                          2-70, 20, 250)
+obstacle1 = pygame.Rect(325, 75, 50, 50)
+obstacle2 = pygame.Rect(525, 275, 50, 50)
+obstacle3 = pygame.Rect(725, 475, 50, 50)
+obstacle4 = pygame.Rect(925, 675, 50, 50)
 
 # Score Text
 player_score = 0
@@ -101,6 +105,43 @@ def ball_animation():
         player_score += 1
         ball_restart()
 
+    if ball.colliderect(obstacle1):
+        if abs(ball.right - obstacle1.left) < 10:
+            v.ball_speed_x *= -1
+        elif abs(ball.left - obstacle1.right) < 10:
+            v.ball_speed_x *= -1
+        elif abs(ball.bottom - obstacle1.top) < 10 and v.ball_speed_y > 0:
+            v.ball_speed_y *= -1
+        elif abs(ball.top - obstacle1.bottom) < 10 and v.ball_speed_y < 0:
+            v.ball_speed_y *= -1
+    if ball.colliderect(obstacle2):
+        if abs(ball.right - obstacle2.left) < 10:
+            v.ball_speed_x *= -1
+        elif abs(ball.left - obstacle2.right) < 10:
+            v.ball_speed_x *= -1
+        elif abs(ball.bottom - obstacle2.top) < 10 and v.ball_speed_y > 0:
+            v.ball_speed_y *= -1
+        elif abs(ball.top - obstacle2.bottom) < 10 and v.ball_speed_y < 0:
+            v.ball_speed_y *= -1
+    if ball.colliderect(obstacle3):
+        if abs(ball.right - obstacle3.left) < 10:
+            v.ball_speed_x *= -1
+        elif abs(ball.left - obstacle3.right) < 10:
+            v.ball_speed_x *= -1
+        elif abs(ball.bottom - obstacle3.top) < 10 and v.ball_speed_y > 0:
+            v.ball_speed_y *= -1
+        elif abs(ball.top - obstacle3.bottom) < 10 and v.ball_speed_y < 0:
+            v.ball_speed_y *= -1
+    if ball.colliderect(obstacle4):
+        if abs(ball.right - obstacle4.left) < 10:
+            v.ball_speed_x *= -1
+        elif abs(ball.left - obstacle4.right) < 10:
+            v.ball_speed_x *= -1
+        elif abs(ball.bottom - obstacle4.top) < 10 and v.ball_speed_y > 0:
+            v.ball_speed_y *= -1
+        elif abs(ball.top - obstacle4.bottom) < 10 and v.ball_speed_y < 0:
+            v.ball_speed_y *= -1
+
 
 def player_animation():
 
@@ -154,7 +195,7 @@ def ball_restart():
 
 def net_animation():
     # Original code
-    player_net.y +=10
+    player_net.y += 10
     opponent_net.y += 10
 
     # player_net.y += v.player_net_speed_y
@@ -172,6 +213,24 @@ def net_animation():
 
     # if opponent_net.top <= 0 or opponent_net.bottom >= screen_height:
     #     v.opponent_net_speed_y *= -1
+
+
+def obstacle_animation():
+    speed = 10
+
+    obstacle1.y += speed
+    obstacle2.y += speed
+    obstacle3.y -= speed
+    obstacle4.y -= speed
+
+    if obstacle1.bottom >= screen_height:
+        obstacle1.top = 0
+    if obstacle2.bottom >= screen_height:
+        obstacle2.top = 0
+    if obstacle3.top <= 0:
+        obstacle3.bottom = screen_height
+    if obstacle4.top <= 0:
+        obstacle4.bottom = screen_height
 
 
 if __name__ == "__main__":
@@ -200,6 +259,7 @@ if __name__ == "__main__":
         opponent_ai()
         spawnBuff()
         net_animation()
+        obstacle_animation()
 
         screen.fill(colours.bg_color)
 
@@ -232,6 +292,11 @@ if __name__ == "__main__":
 
         pygame.draw.rect(screen, "RED", player_net)
         pygame.draw.rect(screen, "RED", opponent_net)
+
+        pygame.draw.rect(screen, colours.light_grey, obstacle1)
+        pygame.draw.rect(screen, colours.light_grey, obstacle2)
+        pygame.draw.rect(screen, colours.light_grey, obstacle3)
+        pygame.draw.rect(screen, colours.light_grey, obstacle4)
 
         # Create a surface for the scores
         score.score(basic_font, player_score,
