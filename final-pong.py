@@ -20,16 +20,17 @@ pygame.display.set_caption('Pong')
 
 # Game Rectangle
 
-buffWall = pygame.Rect(
-    screen_width/2-1, random.randint(0+120, screen_height-120), 2, 120)
-ball = pygame.Rect(screen_width/2-15,
-                   random.randint(0+30, screen_height-30), 30, 30)
+buffWall = pygame.Rect(screen_width/2-1, random.randint(0+120, screen_height-120), 2, 120)
+ball = pygame.Rect(screen_width/2-15, random.randint(0+30, screen_height-30), 30, 30)
+
 player = pygame.Rect(screen_width-70, screen_height /
                      2-70, 20, 140)
 opponent = pygame.Rect(50, screen_height/2-70, 20, 140)
 opponent_net = pygame.Rect(0, screen_height/2-70, 20, 250)
 player_net = pygame.Rect(screen_width-20, screen_height /
                          2-70, 20, 250)
+
+size_change_pickup = pygame.Rect(screen_width/2-15, random.randint(0+30, screen_height-30), 150, 150)
 
 # Score Text
 player_score = 0
@@ -186,6 +187,8 @@ def net_animation():
         v.opponent_net_speed_y *= -1
 
 
+def ball_size_change_mod():
+    pygame.draw.ellipse(screen, colours.green, size_change_pickup)
 
 if __name__ == "__main__":
 
@@ -213,6 +216,7 @@ if __name__ == "__main__":
         opponent_ai()
         spawnBuff()
         net_animation()
+        ball_size_change_mod()
 
         screen.fill(colours.bg_color)
 
@@ -243,7 +247,7 @@ if __name__ == "__main__":
 
         pygame.draw.rect(screen, "RED",player_net)
         pygame.draw.rect(screen, "RED",opponent_net)
-       
+        pygame.draw.ellipse(screen, colours.green, size_change_pickup)
         
 
 
