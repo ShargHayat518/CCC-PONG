@@ -5,6 +5,7 @@ import colours_module as colours
 import variables as v
 import score
 import pongsounds
+import time
 
 # GLOBAL VARIABLES
 
@@ -16,7 +17,6 @@ screen_width = 1280
 screen_height = 800
 screen = pygame.display.set_mode((screen_width, screen_height))
 pygame.display.set_caption('Pong')
-
 
 # Game Rectangle
 
@@ -30,7 +30,7 @@ opponent_net = pygame.Rect(0, screen_height/2-70, 20, 250)
 player_net = pygame.Rect(screen_width-20, screen_height /
                          2-70, 20, 250)
 
-size_change_pickup = pygame.Rect(screen_width/2-15, random.randint(0+30, screen_height-30), 150, 150)
+size_change_powerup = pygame.Rect(random.randint(100, 1180), random.randint(100, 700), 50, 50)
 
 # Score Text
 player_score = 0
@@ -63,7 +63,7 @@ v.buffWall_speed_y *= random.choice((-1, 1))
 
 def ball_animation():
 
-    global ball_speed_x, ball_speed_y, player_score, opponent_score
+    global ball_speed_x, ball_speed_y, player_score, opponent_score, time_now
 
     ball.x += v.ball_speed_x
     ball.y += v.ball_speed_y
@@ -90,6 +90,13 @@ def ball_animation():
 
         v.buffAcquired = False
         v.playerHasBall = True
+
+    # Ball Collision w/ Powerup (sharg_mod)
+    # sharg_mod
+    if ball.colliderect(size_change_powerup) and v.powerup_exists:
+        pongsounds.playPowerUpSound()
+        v.powerup_exists = False
+        time_now = time.time()
 
     if ball.colliderect(opponent):
         pongsounds.playPongSound()
@@ -187,9 +194,6 @@ def net_animation():
         v.opponent_net_speed_y *= -1
 
 
-def ball_size_change_mod():
-    pygame.draw.ellipse(screen, colours.green, size_change_pickup)
-
 if __name__ == "__main__":
 
     # GAME LOOP
@@ -216,7 +220,6 @@ if __name__ == "__main__":
         opponent_ai()
         spawnBuff()
         net_animation()
-        ball_size_change_mod()
 
         screen.fill(colours.bg_color)
 
@@ -230,6 +233,20 @@ if __name__ == "__main__":
             pygame.draw.rect(screen, (random.randint(0,255),random.randint(0,255),random.randint(0,255)), opponent)
         else:
             pygame.draw.rect(screen, colours.light_grey, opponent)
+
+        # sharg_mod
+        if v.powerup_exists:
+            pygame.draw.ellipse(screen, colours.powerup_color, size_change_powerup)
+        else:
+            big_ball_delay = time_now + 1
+            end_big_ball = time_now + 10
+
+            if time.time() < big_ball_delay:
+                ball = pygame.Rect.inflate(ball, 1, 1)
+
+            if time.time() > end_big_ball:
+                ball.height = 30
+                ball.width = 30
 
 
         #This was a test to show color of the buffWall to see if it was completely hit by player or opponent in YELLOW buff
@@ -247,9 +264,6 @@ if __name__ == "__main__":
 
         pygame.draw.rect(screen, "RED",player_net)
         pygame.draw.rect(screen, "RED",opponent_net)
-        pygame.draw.ellipse(screen, colours.green, size_change_pickup)
-        
-
 
         # Create a surface for the scores
         score.score(basic_font, player_score,
