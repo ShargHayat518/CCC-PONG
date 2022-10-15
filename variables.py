@@ -11,6 +11,7 @@ buffWall_speed_y = 6
 playerHasBall = None
 buffAcquired = None
 playerHit = None
+powerup_exists = True
 
 # Testing stuff
 # player_net_speed_y = 10
