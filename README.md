@@ -12,6 +12,8 @@ This is a modded pong game. Each member of the group created one mod to add into
 
 4. Shargeel's mod: when the powerup is hit, the ball increases in size for about 10 seconds, then it goes back to normal
 
+5. CJ's mod: When either the opponent of the player is behind by 3 points, the losing side will have increased paddle speed until the difference between the two scores is less than 3
+
 Avatar:
 
 ![chads](https://user-images.githubusercontent.com/59932594/191081571-96cb6e9a-9a76-4206-b3d4-793088c3bcf0.jpg)
