@@ -250,7 +250,7 @@ if __name__ == "__main__":
                 pygame.quit()
                 sys.exit()
 
-            if (opponent_score - player_score) >= 1:
+            if (opponent_score - player_score) >= 3:
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_UP:
                         v.player_speed -= 10
@@ -261,7 +261,7 @@ if __name__ == "__main__":
                         v.player_speed += 10
                     if event.key == pygame.K_DOWN:
                         v.player_speed -= 10
-            elif (player_score - opponent_score) >= 1:
+            elif (player_score - opponent_score) >= 3:
                 v.opponent_speed = 10
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_UP:
