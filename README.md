@@ -2,7 +2,7 @@
 
 Group Name: Calgary Coding Chads
 
-This is a modded pong game. Each member of the group created one mod to add into the game.
+This is a modded pong game. Each member of the group created one mod to add into the game. Run final-pong.py to play.
 
 1. Anro's mod: Created moving buff wall which gives the player/opponent to splash each other with freaky RGB lights. (Default Wall Color = Yellow, Player wall color = Green, Opponent Wall Color = Red). The wall buff has a randomized direction.
 
