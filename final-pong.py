@@ -224,7 +224,7 @@ def net_animation():
 
 
 def obstacle_animation():
-    speed = 10
+    speed = 5
 
     obstacle1.y += speed
     obstacle2.y += speed
