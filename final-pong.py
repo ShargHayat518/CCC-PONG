@@ -250,7 +250,7 @@ if __name__ == "__main__":
                 pygame.quit()
                 sys.exit()
 
-            if opponent_score - player_score >= 3:
+            if (opponent_score - player_score) >= 1:
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_UP:
                         v.player_speed -= 10
@@ -261,29 +261,30 @@ if __name__ == "__main__":
                         v.player_speed += 10
                     if event.key == pygame.K_DOWN:
                         v.player_speed -= 10
-            elif player_score - opponent_score >= 3:
+            elif (player_score - opponent_score) >= 1:
                 v.opponent_speed = 10
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_UP:
-                        v.player_speed -= 6
+                        v.player_speed -= 7
                     if event.key == pygame.K_DOWN:
-                        v.player_speed += 6
+                        v.player_speed += 7
                 if event.type == pygame.KEYUP:
                     if event.key == pygame.K_UP:
-                        v.player_speed += 6
+                        v.player_speed += 7
                     if event.key == pygame.K_DOWN:
-                        v.player_speed -= 6
+                        v.player_speed -= 7
             else:
                 if event.type == pygame.KEYDOWN:
+                    v.opponent_speed = 7
                     if event.key == pygame.K_UP:
-                        v.player_speed -= 6
+                        v.player_speed -= 7
                     if event.key == pygame.K_DOWN:
-                        v.player_speed += 6
+                        v.player_speed += 7
                 if event.type == pygame.KEYUP:
                     if event.key == pygame.K_UP:
-                        v.player_speed += 6
+                        v.player_speed += 7
                     if event.key == pygame.K_DOWN:
-                        v.player_speed -= 6
+                        v.player_speed -= 7
 
         ball_animation()
         player_animation()
