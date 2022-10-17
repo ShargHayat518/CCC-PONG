@@ -11,6 +11,8 @@ This is a modded pong game. Each member of the group created one mod to add into
 3. Peter's mod: Created a goal post behind the paddles which are red. Balls are now bounceable on every wall. The objective is to hit the red goal paddle. Both goal posts start from top to bottom and then teleports back to the top when it reaches bottom of the screen
 
 4. Shargeel's mod: when the powerup is hit, the ball increases in size for about 10 seconds, then it goes back to normal
+   1. Why this mod improves gameplay: Changing the size of the ball essentially changes how the ball interacts with the paddles and how it moves through
+      the game screen, giving the player a slightly different experience when the ball is larger (because it gives the perception of the ball moving slower)
 
 5. CJ's mod: When either the opponent of the player is behind by 3 points, the losing side will have increased paddle speed until the difference between the two scores is less than 3
 
