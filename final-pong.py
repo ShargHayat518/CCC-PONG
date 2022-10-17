@@ -20,8 +20,10 @@ pygame.display.set_caption('Pong')
 
 # Game Rectangle
 
-buffWall = pygame.Rect(screen_width/2-1, random.randint(0+120, screen_height-120), 2, 120)
-ball = pygame.Rect(screen_width/2-15, random.randint(0+30, screen_height-30), 30, 30)
+buffWall = pygame.Rect(
+    screen_width/2-1, random.randint(0+120, screen_height-120), 2, 120)
+ball = pygame.Rect(screen_width/2-15,
+                   random.randint(0+30, screen_height-30), 30, 30)
 
 player = pygame.Rect(screen_width-70, screen_height /
                      2-70, 20, 140)
@@ -34,7 +36,8 @@ obstacle2 = pygame.Rect(525, 275, 50, 50)
 obstacle3 = pygame.Rect(725, 475, 50, 50)
 obstacle4 = pygame.Rect(925, 675, 50, 50)
 
-size_change_powerup = pygame.Rect(random.randint(100, 1180), random.randint(100, 700), 50, 50)
+size_change_powerup = pygame.Rect(random.randint(
+    100, 1180), random.randint(100, 700), 50, 50)
 
 # Score Text
 player_score = 0
@@ -69,9 +72,14 @@ def ball_animation():
         v.ball_speed_x *= -1
 
     # Ball Collision (Player)
-    if ball.colliderect(player):
+    if ball.colliderect(player) and v.ball_speed_x > 0:
         pongsounds.playPongSound()
-        v.ball_speed_x *= -1
+        if abs(ball.right - player.left) < 10:
+            v.ball_speed_x *= -1
+        elif abs(ball.bottom - player.top) < 10 and v.ball_speed_y > 0:
+            v.ball_speed_y *= -1
+        elif abs(ball.top - player.bottom) < 10 and v.ball_speed_y < 0:
+            v.ball_speed_y *= -1
 
         if v.playerHasBall == False and v.buffAcquired == True:
             v.playerHit = True
@@ -86,9 +94,14 @@ def ball_animation():
         v.powerup_exists = False
         time_now = time.time()
 
-    if ball.colliderect(opponent):
+    if ball.colliderect(opponent) and v.ball_speed_x < 0:
         pongsounds.playPongSound()
-        v.ball_speed_x *= -1
+        if abs(ball.left - opponent.right) < 10:
+            v.ball_speed_x *= -1
+        elif abs(ball.bottom - opponent.top) < 10 and v.ball_speed_y > 0:
+            v.ball_speed_y *= -1
+        elif abs(ball.top - opponent.bottom) < 10 and v.ball_speed_y < 0:
+            v.ball_speed_y *= -1
 
         if v.playerHasBall == True and v.buffAcquired == True:
             v.playerHit = False
@@ -240,6 +253,7 @@ def obstacle_animation():
     if obstacle4.top <= 0:
         obstacle4.bottom = screen_height
 
+
 if __name__ == "__main__":
 
     # GAME LOOP
@@ -312,7 +326,8 @@ if __name__ == "__main__":
 
         # sharg_mod
         if v.powerup_exists:
-            pygame.draw.ellipse(screen, colours.powerup_color, size_change_powerup)
+            pygame.draw.ellipse(
+                screen, colours.powerup_color, size_change_powerup)
         else:
             big_ball_delay = time_now + 1
             end_big_ball = time_now + 10
@@ -323,9 +338,9 @@ if __name__ == "__main__":
             if time.time() > end_big_ball:
                 ball.height = 30
                 ball.width = 30
-                
+
         # This was a test to show color of the buffWall to see if it was completely hit by player or opponent in YELLOW buff
-        
+
         if v.playerHasBall == True and v.buffAcquired == True:
             pygame.draw.rect(screen, 'GREEN', buffWall)
         elif v.playerHasBall == False and v.buffAcquired == True:
