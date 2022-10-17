@@ -9,6 +9,7 @@ This is a modded pong game. Each member of the group created one mod to add into
 2. Jordan's mod: When the moving buff wall is hit, the ball bounces the opposite way off the bottom and top of the screen until the buff wall is hit again. This adds an element of randomness which contributes to making the opponent possible to beat despite its normally unbeatable AI. 
 
 3. Peter's mod: Created a goal post behind the paddles which are red. Balls are now bounceable on every wall. The objective is to hit the red goal paddle. Both goal posts start from top to bottom and then teleports back to the top when it reaches bottom of the screen
+   1. Why this mod improves gameplay: Adding goal post adds a level of difficulty to the game. Not only do the play have to keep track of the ball but also the goal           posts, this is made even more challenging since the goal posits teleport to the top instead of bouncing back and forth. This added difficulty not only more make         the game more challenging but also more enjoyable.
 
 4. Shargeel's mod: when the powerup is hit, the ball increases in size for about 10 seconds, then it goes back to normal
    1. Why this mod improves gameplay: Changing the size of the ball essentially changes how the ball interacts with the paddles and how it moves through
