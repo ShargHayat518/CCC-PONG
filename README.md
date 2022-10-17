@@ -6,7 +6,7 @@ This is a modded pong game. Each member of the group created one mod to add into
 
 1. Anro's mod: Created moving buff wall which gives the player/opponent to splash each other with freaky RGB lights. (Default Wall Color = Yellow, Player wall color = Green, Opponent Wall Color = Red). The wall buff has a randomized direction.
 
-2. Jordan's mod: When the moving buff wall is hit, the ball bounces the opposite way off the bottom and top of the screen until the buff wall is hit again. 
+2. Jordan's mod: When the moving buff wall is hit, the ball bounces the opposite way off the bottom and top of the screen until the buff wall is hit again. This adds an element of randomness which contributes to making the opponent possible to beat despite its normally unbeatable AI. 
 
 3. Peter's mod: Created a goal post behind the paddles which are red. Balls are now bounceable on every wall. The objective is to hit the red goal paddle. Both goal posts start from top to bottom and then teleports back to the top when it reaches bottom of the screen
 
