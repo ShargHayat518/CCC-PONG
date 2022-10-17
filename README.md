@@ -5,6 +5,9 @@ Group Name: Calgary Coding Chads
 This is a modded pong game. Each member of the group created one mod to add into the game. Run final-pong.py to play.
 
 1. Anro's mod: Created moving buff wall which gives the player/opponent to splash each other with freaky RGB lights. (Default Wall Color = Yellow, Player wall color = Green, Opponent Wall Color = Red). The wall buff has a randomized direction.
+   1. The mod improves gameplay because Pong Game lacks color and adding color animations would brighten up the gameplay. Aside from colors, it also indicates that a  
+      player or opponent has successfully hit each other. The wall buff was also added to help implement other mods that could be added and an objective for players to 
+      try hitting which makes it fun.
 
 2. Jordan's mod: When the moving buff wall is hit, the ball bounces the opposite way off the bottom and top of the screen until the buff wall is hit again. This adds an element of randomness which contributes to making the opponent possible to beat despite its normally unbeatable AI. 
 
